@@ -50,6 +50,7 @@ func HandleBot() echo.MiddlewareFunc {
 				if compiled.MatchString(userAgentValue) {
 					println("useragent: ", userAgentValue, ", compiled num: ", i)
 					c.Error(errorImpl{"error user is bot."})
+					break
 				}
 			}
 			return next(c)
