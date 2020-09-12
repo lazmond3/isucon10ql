@@ -20,7 +20,7 @@ CREATE TABLE isuumo.estate
     popularity  INTEGER             NOT NULL,
     INDEX `lang_long_ASC` (`latitude`  ASC , `longitude`ASC ) USING BTREE,
     INDEX `long_lang_ASC` (`longitude` ASC , `latitude` ASC ) USING BTREE,
-    INDEX `lang_long_DSC` (`latitude`  DESC ,`longitude`ASC ) USING BTREE,
+    -- INDEX `lang_long_DSC` (`latitude`  DESC ,`longitude`ASC ) USING BTREE,
     INDEX `door_height_key` (`door_height` ) USING BTREE,
     INDEX `door_width_key` (`door_width` ) USING BTREE,
     INDEX `rent_key` (`rent` ) USING BTREE,
