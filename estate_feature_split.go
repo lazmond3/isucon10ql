@@ -162,7 +162,11 @@ func makeInsertTextForEstate(t Estate) string {
 	madeSqlSet := makeSetTextForFeature(t.Features)
 	sql += madeSqlSet
 
-	sql += ","
+	if len(madeSqlSet) != 0  {
+		sql += ","
+	} else {
+		sql += " SET "
+	}
 
 	atoiId := strconv.FormatInt(t.ID, 10)
 	sql += ` id = ` + atoiId + ", "
