@@ -20,13 +20,7 @@ crawler \(https:\/\/isucon\.invalid\/(support\/faq\/|help\/jp\/)
 isubot
 Isupider
 Isupider(-image)?\+
-.*BOT.*
-.*spider.*
-.*Spider.*
-.*SPIDER.*
-.*Crawler.*
-.*crawler.*
-.*bot.*`
+`
 	// (bot|crawler|spider)(?:[-_ .\/;@()]|$)/i // これできてない。
 	botRegExpStringArr := strings.Split(st, "\n")
 	maxSize := len(botRegExpStringArr)
