@@ -290,6 +290,7 @@ func postEstate2(c echo.Context) error {
 		}
 
 		createdSql := makeInsertTextForEstate(estateVal)
+		println("created sql in bug estate post 入稿: ", createdSql)
 
 		//_, err := tx.Exec("INSERT INTO estate(id, name, description, thumbnail, address, latitude, longitude, rent, door_height, door_width, features, popularity) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)", id, name, description, thumbnail, address, latitude, longitude, rent, doorHeight, doorWidth, features, popularity)
 		_, err := tx.Exec(createdSql)
