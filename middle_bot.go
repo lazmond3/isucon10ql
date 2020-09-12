@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/labstack/echo"
-	"github.com/labstack/gommon/log"
+	// "github.com/labstack/gommon/log"
 	"regexp"
 	"strings"
 )
@@ -44,12 +44,12 @@ func HandleBot() echo.MiddlewareFunc {
 
 			userAgentValue := header.Get("User-Agent")
 
-			log.Debugf("[HandleBot] header: %v\n", header)
-			log.Debugf("[HandleBot] user agent: %v \n", userAgentValue)
+			// log.Debugf("[HandleBot] header: %v\n", header)
+			// log.Debugf("[HandleBot] user agent: %v \n", userAgentValue)
 
 			for i, compiled := range botRegExpHeader {
 				if compiled.MatchString(userAgentValue) {
-					println("useragent: ", userAgentValue, ", compiled num: ", i)
+					// println("useragent: ", userAgentValue, ", compiled num: ", i)
 					errorString := fmt.Sprintf("error user is bot. the strings %s is matched with rule %d",
 						userAgentValue,
 						i)

@@ -208,14 +208,14 @@ func convertEstate2ToEstate(t Estate2) Estate {
 func migrationEstate() {
 	tx, err := db.Beginx()
 	if err != nil {
-		println("db making failed transaction")
+		// println("db making failed transaction")
 	}
 	defer tx.Rollback()
 
 	sql := `SELECT * FROM estate`
 	estate2 := []Estate2{}
 	err = tx.Select(&estate2, sql)
-	println("ALL FETCH SELECT estate num: ", len(estate2))
+	// println("ALL FETCH SELECT estate num: ", len(estate2))
 
 
 	sql =  `UPDATE estate `
@@ -229,11 +229,11 @@ func migrationEstate() {
 		
 		tx.Exec(sql2, v.ID)
 	}
-	println("update sql is for migration : ", sql)
+	// println("update sql is for migration : ", sql)
 	if err := tx.Commit(); err != nil {
-		println("TX COMMIT FAILED!")
+		// println("TX COMMIT FAILED!")
 	}
-	println("tx commit ended! in migration.. s")
+	// println("tx commit ended! in migration.. s")
 }
 
 
@@ -295,7 +295,7 @@ func postEstate2(c echo.Context) error {
 		}
 
 		createdSql := makeInsertTextForEstate(estateVal)
-		println("created sql in bug estate post 入稿: ", createdSql)
+		// println("created sql in bug estate post 入稿: ", createdSql)
 
 		//_, err := tx.Exec("INSERT INTO estate(id, name, description, thumbnail, address, latitude, longitude, rent, door_height, door_width, features, popularity) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)", id, name, description, thumbnail, address, latitude, longitude, rent, doorHeight, doorWidth, features, popularity)
 		_, err := tx.Exec(createdSql)
