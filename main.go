@@ -77,11 +77,13 @@ func main() {
 
 	// Estate Handler
 	e.GET("/api/estate/:id", getEstateDetail) // g
-	e.GET("/api/estate/search", searchEstates) // g
+	//e.GET("/api/estate/search", searchEstates) // g
+	e.GET("/api/estate/search", searchEstates2) // g
 	e.GET("/api/estate/low_priced", getLowPricedEstate) // g
 	e.GET("/api/estate/search/condition", getEstateSearchCondition) // g
 
-	e.POST("/api/estate", postEstate) // p
+	//e.POST("/api/estate", postEstate) // p
+	e.POST("/api/estate", postEstate2) // p
 	e.POST("/api/estate/req_doc/:id", postEstateRequestDocument) // p
 	e.POST("/api/estate/nazotte", searchEstateNazotte) // p
 
