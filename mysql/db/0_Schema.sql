@@ -22,9 +22,9 @@ CREATE TABLE isuumo.estate
     INDEX `reverse_lat_long` (`longitude`, `latitude`) USING BTREE, 
     INDEX `door_height_key` (`door_height` ) USING BTREE,
     INDEX `door_width_key` (`door_width` ) USING BTREE,
-    INDEX `rent_key` (`rent` ) USING BTREE,
-    INDEX `pop` (`popularity` ) USING BTREE,
-    FULLTEXT `fulltext_in_features` (`features`) 
+    -- INDEX `rent_key` (`rent` ) USING BTREE,
+    INDEX `pop` (`popularity` ) USING BTREE
+    -- FULLTEXT `fulltext_in_features` (`features`) 
 );
 
     -- INDEX `popularity_key` (`popularity` ) USING BTREE,
