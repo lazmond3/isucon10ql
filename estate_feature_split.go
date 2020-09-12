@@ -139,7 +139,7 @@ func makeSetTextForFeature(feature string) string {
 
 	for _, feature_i := range textSplitedList {
 		fieldName := estateFeature_Map[feature_i]
-		sql +=  fmt.Sprintf("%s = true,\n", fieldName)
+		sql +=  fmt.Sprintf("%s = 1,\n", fieldName)
 	}
 
 	return sql
@@ -199,6 +199,7 @@ func migrationEstate() {
 	sql := `SELECT * FROM estate`
 	estate2 := []Estate2{}
 	err = tx.Select(&estate2, sql)
+	println("ALL FETCH SELECT estate num: ", len(estate2))
 	if err != nil {
 		println ("migration select failed!")
 	}
@@ -213,6 +214,7 @@ func migrationEstate() {
 	if err := tx.Commit(); err != nil {
 		println("TX COMMIT FAILED!")
 	}
+	println("tx commit ended! in migration.. s")
 }
 
 
