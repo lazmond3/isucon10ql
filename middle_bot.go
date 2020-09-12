@@ -41,6 +41,14 @@ func HandleBot() echo.MiddlewareFunc {
 	return func(next echo.HandlerFunc) echo.HandlerFunc {
 		return func(c echo.Context) error {
 			header := c.Request().Header
+			p := make([]byte, 100)
+			count, err := c.Request().Body.Read(p)
+			if err != nil || count == 0 {
+				println("count: ", count, ", err: ", err)
+			}
+			println("p: ", string(p))
+
+			println("body: " , string(p) )
 
 			userAgentValue := header.Get("User-Agent")
 
