@@ -125,14 +125,18 @@ func searchEstates(c echo.Context) error {
 	}
 
 	estates := []Estate{}
+	estates2 := []Estate2{}
 	params = append(params, perPage, page*perPage)
-	err = db.Select(&estates, searchQuery+searchCondition+limitOffset, params...)
+	err = db.Select(&estates2, searchQuery+searchCondition+limitOffset, params...)
 	if err != nil {
 		if err == sql.ErrNoRows {
 			return c.JSON(http.StatusOK, EstateSearchResponse{Count: 0, Estates: []Estate{}})
 		}
 		c.Logger().Errorf("searchEstates DB execution error : %v", err)
 		return c.NoContent(http.StatusInternalServerError)
+	}
+	for _, est := range estates2 {
+		estates = append(estates, convertEstate2ToEstate(est))
 	}
 
 	res.Estates = estates
@@ -143,8 +147,9 @@ func searchEstates(c echo.Context) error {
 
 func getLowPricedEstate(c echo.Context) error {
 	estates := make([]Estate, 0, Limit)
+	estates2 := make([]Estate2, 0, Limit)
 	query := `SELECT * FROM estate ORDER BY rent ASC, id ASC LIMIT ?`
-	err := db.Select(&estates, query, Limit)
+	err := db.Select(&estates2, query, Limit)
 	if err != nil {
 		if err == sql.ErrNoRows {
 			c.Logger().Error("getLowPricedEstate not found")
@@ -152,6 +157,10 @@ func getLowPricedEstate(c echo.Context) error {
 		}
 		c.Logger().Errorf("getLowPricedEstate DB execution error : %v", err)
 		return c.NoContent(http.StatusInternalServerError)
+	}
+
+	for _, est := range estates2 {
+		estates = append(estates, convertEstate2ToEstate(est))
 	}
 
 	return c.JSON(http.StatusOK, EstateListResponse{Estates: estates})
@@ -183,17 +192,22 @@ func searchRecommendedEstateWithChair(c echo.Context) error {
 	}
 
 	var estates []Estate
+	var estates2 []Estate2
 	w := chair.Width
 	h := chair.Height
 	d := chair.Depth
 	query = `SELECT * FROM estate WHERE (door_width >= ? AND door_height >= ?) OR (door_width >= ? AND door_height >= ?) OR (door_width >= ? AND door_height >= ?) OR (door_width >= ? AND door_height >= ?) OR (door_width >= ? AND door_height >= ?) OR (door_width >= ? AND door_height >= ?) ORDER BY popularity DESC, id ASC LIMIT ?`
-	err = db.Select(&estates, query, w, h, w, d, h, w, h, d, d, w, d, h, Limit)
+	err = db.Select(&estates2, query, w, h, w, d, h, w, h, d, d, w, d, h, Limit)
 	if err != nil {
 		if err == sql.ErrNoRows {
 			return c.JSON(http.StatusOK, EstateListResponse{[]Estate{}})
 		}
 		c.Logger().Errorf("Database execution error : %v", err)
 		return c.NoContent(http.StatusInternalServerError)
+	}
+	estates = make([]Estate, len(estates2))
+	for i, est := range estates2 {
+		estates[i] = convertEstate2ToEstate(est)
 	}
 
 	return c.JSON(http.StatusOK, EstateListResponse{Estates: estates})

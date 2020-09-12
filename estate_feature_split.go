@@ -396,14 +396,19 @@ func searchEstates2(c echo.Context) error {
 	}
 
 	estates := []Estate{}
+	estates2 := []Estate2{}
 	params = append(params, perPage, page*perPage)
-	err = db.Select(&estates, searchQuery+searchCondition+limitOffset, params...)
+	err = db.Select(&estates2, searchQuery+searchCondition+limitOffset, params...)
 	if err != nil {
 		if err == sql.ErrNoRows {
 			return c.JSON(http.StatusOK, EstateSearchResponse{Count: 0, Estates: []Estate{}})
 		}
 		c.Logger().Errorf("searchEstates DB execution error : %v", err)
 		return c.NoContent(http.StatusInternalServerError)
+	}
+
+	for _, est := range estates2 {
+		estates = append(estates, convertEstate2ToEstate(est))
 	}
 
 	res.Estates = estates
