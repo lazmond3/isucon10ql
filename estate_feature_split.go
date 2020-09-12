@@ -171,6 +171,23 @@ func makeInsertTextForEstate(t Estate) string {
 	return sql
 }
 
+func convertEstate2ToEstate(t Estate2) Estate {
+	return Estate{
+		ID: t.ID,
+		Name: t.Name,
+		Description: t.Description,
+		Thumbnail: t.Thumbnail,
+		Address: t.Address,
+		Latitude: t.Latitude,
+		Longitude: t.Longitude,
+		Rent: t.Rent,
+		DoorHeight: t.DoorHeight,
+		DoorWidth: t.DoorWidth,
+		Features: t.Features,
+		Popularity: t.Popularity,
+
+	}
+}
 
 func migrationEstate() {
 	tx, err := db.Beginx()
