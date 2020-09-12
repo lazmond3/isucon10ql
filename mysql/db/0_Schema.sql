@@ -25,7 +25,6 @@ CREATE TABLE isuumo.estate
     INDEX `door_width_key` (`door_width` ) USING BTREE,
     INDEX `rent_key` (`rent` ) USING BTREE,
     INDEX `popularity_key` (`popularity` ) USING BTREE
-    -- KEY `long_lang_DSC` (`longitude` DESC ,`latitude` ASC ) USING BTREE
 );
 
 CREATE TABLE isuumo.chair

@@ -7,8 +7,7 @@ import (
 	"net/http"
 )
 
-//const NazotteLimit = 50
-const NazotteLimit = 20
+const NazotteLimit = 50
 
 
 func searchEstateNazotte(c echo.Context) error {
