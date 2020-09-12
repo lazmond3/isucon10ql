@@ -24,6 +24,8 @@ func searchEstateNazotte(c echo.Context) error {
 
 	b := coordinates.getBoundingBox()
 	estatesInBoundingBox := []Estate{}
+	estatesInBoundingBox2 := []Estate2{}
+
 	query :=
 		`SELECT * FROM estate ` +
 		` WHERE ` +
@@ -31,7 +33,7 @@ func searchEstateNazotte(c echo.Context) error {
 			`ORDER BY popularity DESC, id ASC`
 			
 			// `latitude <= ? AND latitude >= ? AND longitude <= ? AND longitude >= ? ` +
-	err = db.Select(&estatesInBoundingBox, 
+	err = db.Select(&estatesInBoundingBox2,
 		query, 
 		b.BottomRightCorner.Latitude, 
 		b.BottomRightCorner.Longitude, 
@@ -44,6 +46,11 @@ func searchEstateNazotte(c echo.Context) error {
 	} else if err != nil {
 		c.Echo().Logger.Errorf("database execution error : %v", err)
 		return c.NoContent(http.StatusInternalServerError)
+	}
+
+	estatesInBoundingBox = make([]Estate, len(estatesInBoundingBox2))
+	for i, est := range estatesInBoundingBox2 {
+		estatesInBoundingBox[i] = convertEstate2ToEstate(est)
 	}
 
 	estatesInPolygon := []Estate{}
