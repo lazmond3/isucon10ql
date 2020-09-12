@@ -3,3 +3,4 @@ isuumo
 *.sql
 
 !0_Schema.sql
+*.csv
