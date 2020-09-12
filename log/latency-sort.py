@@ -2,7 +2,7 @@ import re
 import json
 
 # fname = "bench2-after-key.log"
-fname = "file2.log"
+fname = "n.log"
 
 
 start = '{"time":'
