@@ -166,16 +166,16 @@ func makeInsertTextForEstate(t Estate) string {
 
 	atoiId := strconv.FormatInt(t.ID, 10)
 	sql += ` id = ` + atoiId + ", "
-	sql += ` thumbnail =  ` + t.Thumbnail + ", "
-	sql += ` name = ` + t.Name + ", "
-	sql += ` description = ` + t.Description + ", "
+	sql += ` thumbnail =  "` + t.Thumbnail + "\", "
+	sql += ` name = "` + t.Name + "\", "
+	sql += ` description = "` + t.Description + "\", "
 	sql += ` latitude = ` + strconv.FormatFloat(t.Latitude, 'f', -1, 64) + ", "
 	sql += ` longitude = ` + strconv.FormatFloat(t.Longitude, 'f', -1, 64) + ", "
-	sql += ` address = ` + t.Address + ", "
+	sql += ` address = "` + t.Address + "\", "
 	sql += ` rent = ` + strconv.FormatInt(t.Rent, 10) + ", "
 	sql += ` door_height = ` + strconv.FormatInt(t.DoorHeight, 10) + ", "
 	sql += ` door_width = ` + strconv.FormatInt(t.DoorWidth, 10) + ", "
-	sql += ` features = ` + t.Features + ", "
+	sql += ` features =  "` + t.Features + "\", "
 	sql += ` popularity = ` + strconv.FormatInt(t.Popularity, 10)
 
 	sql += ` ; `
