@@ -9,7 +9,7 @@ import (
 )
 
 func initialize(c echo.Context) error {
-	sqlDir := filepath.Join("..", "mysql", "db")
+	sqlDir := filepath.Join("mysql", "db")
 	paths := []string{
 		filepath.Join(sqlDir, "0_Schema.sql"),
 		filepath.Join(sqlDir, "1_DummyEstateData.sql"),
