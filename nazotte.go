@@ -31,7 +31,13 @@ func searchEstateNazotte(c echo.Context) error {
 			`ORDER BY popularity DESC, id ASC`
 			
 			// `latitude <= ? AND latitude >= ? AND longitude <= ? AND longitude >= ? ` +
-	err = db.Select(&estatesInBoundingBox, query, b.BottomRightCorner.Latitude, b.TopLeftCorner.Latitude, b.BottomRightCorner.Longitude, b.TopLeftCorner.Longitude)
+	err = db.Select(&estatesInBoundingBox, 
+		query, 
+		b.BottomRightCorner.Latitude, 
+		b.BottomRightCorner.Longitude, 
+		b.TopLeftCorner.Latitude, 
+		b.TopLeftCorner.Longitude,
+	)
 	if err == sql.ErrNoRows {
 		c.Echo().Logger.Infof("select * from estate where latitude ...", err)
 		return c.JSON(http.StatusOK, EstateSearchResponse{Count: 0, Estates: []Estate{}})
