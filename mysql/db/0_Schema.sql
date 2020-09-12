@@ -18,10 +18,10 @@ CREATE TABLE isuumo.estate
     door_width  INTEGER             NOT NULL,
     features    VARCHAR(64)         NOT NULL,
     popularity  INTEGER             NOT NULL,
-    KEY `lang_long_ASC` (`latitude`  ASC , `longitude`ASC ) USING BTREE,
-    KEY `long_lang_ASC` (`longitude` ASC , `latitude` ASC ) USING BTREE,
-    KEY `lang_long_DSC` (`latitude`  DESC ,`longitude`ASC ) USING BTREE,
-    KEY `long_lang_DSC` (`longitude` DESC ,`latitude` ASC ) USING BTREE
+    INDEX `lang_long_ASC` (`latitude`  ASC , `longitude`ASC ) USING BTREE,
+    INDEX `long_lang_ASC` (`longitude` ASC , `latitude` ASC ) USING BTREE
+    -- ,KEY `lang_long_DSC` (`latitude`  DESC ,`longitude`ASC ) USING BTREE,
+    -- KEY `long_lang_DSC` (`longitude` DESC ,`latitude` ASC ) USING BTREE
 );
 
 CREATE TABLE isuumo.chair
