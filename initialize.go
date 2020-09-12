@@ -33,7 +33,7 @@ func initialize(c echo.Context) error {
 	}
 
 
-	//migrationEstate()
+	migrationEstate()
 
 	return c.JSON(http.StatusOK, InitializeResponse{
 		Language: "go",
