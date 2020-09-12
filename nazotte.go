@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"github.com/labstack/echo"
 	"net/http"
-	"github.com/labstack/gommon/log"
+	"strconv"
 )
 
 const NazotteLimit = 50
@@ -49,7 +49,7 @@ func searchEstateNazotte(c echo.Context) error {
 		return c.NoContent(http.StatusInternalServerError)
 	}
 
-	log.Debugf("NAZOTTE SELECTION: sql: %s  count: %d\n", query, len(estatesInBoundingBox2))
+	println("NAZOTTE SELECTION: sql: ", query,  " count: " , strconv.Itoa( len(estatesInBoundingBox2)), "\n")
 
 	estatesInBoundingBox = make([]Estate, len(estatesInBoundingBox2))
 	for i, est := range estatesInBoundingBox2 {
