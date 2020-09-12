@@ -1,7 +1,7 @@
 import re
 import json
 
-fname = "bench.log"
+fname = "bench2-after-key.log"
 late = "latency.dic.log"
 
 start = '{"time":'
