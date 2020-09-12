@@ -19,21 +19,14 @@ ISUCONFeedSeeker(Beta)?
 crawler \(https:\/\/isucon\.invalid\/(support\/faq\/|help\/jp\/)
 isubot
 Isupider
-Isupider(-image)?\+
-`
-	// (bot|crawler|spider)(?:[-_ .\/;@()]|$)/i // これできてない。
+Isupider(-image)?\+`
+	///// (bot|crawler|spider)(?:[-_ .\/;@()]|$)/i // これできてない。
 	botRegExpStringArr := strings.Split(st, "\n")
 	maxSize := len(botRegExpStringArr)
 	botRegExpHeader	= make([]*regexp.Regexp, maxSize)
-
 	for i, botRSt := range botRegExpStringArr {
-		println("botRSt: ", botRSt)
 		botRegExpHeader[i] = regexp.MustCompile(botRSt)
-		pp := botRegExpHeader[i]
-		b := pp.MatchString("ISUCONbot-Image/")
-		log.Debugf("found  botRst : ", botRSt, ", is ISUCONbot-Image? : ", b)
 	}
-
 }
 
 type errorImpl struct  {
@@ -53,8 +46,9 @@ func HandleBot() echo.MiddlewareFunc {
 			log.Debugf("[HandleBot] header: %v\n", header)
 			log.Debugf("[HandleBot] user agent: %v \n", userAgentValue)
 
-			for _, compiled := range botRegExpHeader {
+			for i, compiled := range botRegExpHeader {
 				if compiled.MatchString(userAgentValue) {
+					println("useragent: ", userAgentValue, ", compiled num: ", i)
 					c.Error(errorImpl{"error user is bot."})
 				}
 			}
