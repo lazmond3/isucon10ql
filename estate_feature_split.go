@@ -137,10 +137,22 @@ func makeSetTextForFeature(feature string) string {
 	var textSplitedList = strings.Split(feature, ",")
 	var sql = ` SET `
 
+	var setCondition = []string{}
+
 	for _, feature_i := range textSplitedList {
 		fieldName := estateFeature_Map[feature_i]
-		sql +=  fmt.Sprintf("%s = 1,\n", fieldName)
+		if len(fieldName) == 0 {
+			println("error make set text for feature! : ", feature_i)
+			break
+		}
+		// sql +=  fmt.Sprintf("%s = 1,\n", fieldName)
+		setCondition = append(setCondition, fmt.Sprintf("%s = 1", fieldName))
 	}
+	if len(setCondition) == 0 {
+		return ""
+	}
+
+	sql += strings.Join(setCondition, ",")
 
 	return sql
 }
@@ -206,11 +218,15 @@ func migrationEstate() {
 
 	sql =  `UPDATE estate `
 	for _, v := range estate2 {
-		println("      update sql in loop : ", sql2)
-		sql2 := sql + makeSetTextForFeature(v.Features)
+		madeStr := makeSetTextForFeature(v.Features)
+		if len(madeStr) == 0 {
+			continue
+		}
+		sql2 := sql + madeStr
 		sql2 += ` WHERE id = ?;`
-
+		
 		tx.Exec(sql2, v.ID)
+		println("      update sql in loop : ", sql2, " and v: ", fmt.Sprintf("%v{}", v))
 	}
 	println("update sql is for migration : ", sql)
 	if err := tx.Commit(); err != nil {
