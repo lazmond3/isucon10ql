@@ -7,32 +7,41 @@ import (
 	"strings"
 )
 
-var botRegExpHeader = make(map[string]*regexp.Regexp)
+var botRegExpHeader []*regexp.Regexp
 
 func initRegExp() {
-	//var botRegExpString =
-	var st = `/ISUCONbot(-Mobile)?/
-/ISUCONbot-Image\//
-/Mediapartners-ISUCON/
-/ISUCONCoffee/
-/ISUCONFeedSeeker(Beta)?/
-/crawler \(https:\/\/isucon\.invalid\/(support\/faq\/|help\/jp\/)/
-/isubot/
-/Isupider/
-/Isupider(-image)?\+/
-/(bot|crawler|spider)(?:[-_ .\/;@()]|$)/i`
+	var st = `ISUCONbot(-Mobile)?
+ISUCONbot-Image\/
+^ISUCONbot-Image.*
+Mediapartners-ISUCON
+ISUCONCoffee
+ISUCONFeedSeeker(Beta)?
+crawler \(https:\/\/isucon\.invalid\/(support\/faq\/|help\/jp\/)
+isubot
+Isupider
+Isupider(-image)?\+`
+	// (bot|crawler|spider)(?:[-_ .\/;@()]|$)/i
 	botRegExpStringArr := strings.Split(st, "\n")
 
-	//botRegExpStringArr := [...]string{
-	//
-	//} // こうかける
-	for _, botRSt := range botRegExpStringArr {
+	maxSize := len(botRegExpStringArr)
+	//botRegExpHeader	= make([]*regexp.Regexp, maxSize + 1)
+	botRegExpHeader	= make([]*regexp.Regexp, maxSize)
+
+	for i, botRSt := range botRegExpStringArr {
 		println("botRSt: ", botRSt)
+		botRegExpHeader[i] = regexp.MustCompile(botRSt)
+		pp := botRegExpHeader[i]
+		b := pp.MatchString("ISUCONbot-Image/")
+		println("found  botRst : ", botRSt, ", is ISUCONbot-Image? : ", b)
 	}
 
-	//  *regexp.Regexp
-	//var validID = regexp.MustCompile(`^[a-z]+\[[0-9]+\]$`)
+}
 
+type errorImpl struct  {
+	val string
+}
+func (e errorImpl) Error() string {
+	return e.val
 }
 
 func HandleBot() echo.MiddlewareFunc {
@@ -42,6 +51,12 @@ func HandleBot() echo.MiddlewareFunc {
 			fmt.Printf("[HandleBot] header: %v\n", header)
 			userAgentValue := header.Get("User-Agent")
 			fmt.Printf("[HandleBot] user agent: %v \n", userAgentValue)
+
+			for _, compiled := range botRegExpHeader {
+				if compiled.MatchString(userAgentValue) {
+					c.Error(errorImpl{"error user is bot."})
+				}
+			}
 			return next(c)
 		}
 	}
