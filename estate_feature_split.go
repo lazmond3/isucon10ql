@@ -142,7 +142,6 @@ func makeSetTextForFeature(feature string) string {
 	for _, feature_i := range textSplitedList {
 		fieldName := estateFeature_Map[feature_i]
 		if len(fieldName) == 0 {
-			println("error make set text for feature! : ", feature_i)
 			break
 		}
 		// sql +=  fmt.Sprintf("%s = 1,\n", fieldName)
@@ -212,9 +211,7 @@ func migrationEstate() {
 	estate2 := []Estate2{}
 	err = tx.Select(&estate2, sql)
 	println("ALL FETCH SELECT estate num: ", len(estate2))
-	if err != nil {
-		println ("migration select failed!")
-	}
+
 
 	sql =  `UPDATE estate `
 	for _, v := range estate2 {
@@ -226,7 +223,6 @@ func migrationEstate() {
 		sql2 += ` WHERE id = ?;`
 		
 		tx.Exec(sql2, v.ID)
-		println("      update sql in loop : ", sql2, " and v: ", fmt.Sprintf("%v{}", v))
 	}
 	println("update sql is for migration : ", sql)
 	if err := tx.Commit(); err != nil {
