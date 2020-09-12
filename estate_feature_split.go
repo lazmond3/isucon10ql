@@ -211,6 +211,7 @@ func migrationEstate() {
 
 		tx.Exec(sql2, v.ID)
 	}
+	println("update sql is for migration : ", sql)
 	if err := tx.Commit(); err != nil {
 		println("TX COMMIT FAILED!")
 	}
