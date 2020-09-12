@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"github.com/labstack/echo"
 	"github.com/labstack/gommon/log"
 	"regexp"
@@ -49,7 +50,10 @@ func HandleBot() echo.MiddlewareFunc {
 			for i, compiled := range botRegExpHeader {
 				if compiled.MatchString(userAgentValue) {
 					println("useragent: ", userAgentValue, ", compiled num: ", i)
-					c.Error(errorImpl{"error user is bot."})
+					errorString := fmt.Sprintf("error user is bot. the strings %s is matched with rule %d",
+						userAgentValue,
+						i)
+					c.Error(errorImpl{errorString})
 					break
 				}
 			}
