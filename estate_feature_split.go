@@ -206,6 +206,7 @@ func migrationEstate() {
 
 	sql =  `UPDATE estate `
 	for _, v := range estate2 {
+		println("      update sql in loop : ", sql2)
 		sql2 := sql + makeSetTextForFeature(v.Features)
 		sql2 += ` WHERE id = ?;`
 
