@@ -13,7 +13,7 @@ import (
 )
 
 const Limit = 20
-const NazotteLimit = 50
+
 
 var db *sqlx.DB
 var mySQLConnectionData *MySQLConnectionEnv
