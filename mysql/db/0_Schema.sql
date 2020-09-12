@@ -24,8 +24,8 @@ CREATE TABLE isuumo.estate
     INDEX `door_width_key` (`door_width` ) USING BTREE,
     -- INDEX `rent_key` (`rent` ) USING BTREE,
     INDEX `pop` (`popularity` ) USING BTREE,
-    INDEX `features_30` (`features`(30))
-    -- FULLTEXT `fulltext_in_features` (`features`) 
+    -- INDEX `features_30` (`features`(30))
+    FULLTEXT `fulltext_in_features` (`features`) 
 );
 
     -- INDEX `popularity_key` (`popularity` ) USING BTREE,
