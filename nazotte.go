@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/labstack/echo"
 	"net/http"
+	"github.com/labstack/gommon/log"
 )
 
 const NazotteLimit = 50
@@ -47,6 +48,8 @@ func searchEstateNazotte(c echo.Context) error {
 		c.Echo().Logger.Errorf("database execution error : %v", err)
 		return c.NoContent(http.StatusInternalServerError)
 	}
+
+	log.Debugf("NAZOTTE SELECTION: sql: %s  count: %d\n", query, len(estatesInBoundingBox2))
 
 	estatesInBoundingBox = make([]Estate, len(estatesInBoundingBox2))
 	for i, est := range estatesInBoundingBox2 {
