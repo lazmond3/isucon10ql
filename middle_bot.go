@@ -3,9 +3,37 @@ package main
 import (
 	"fmt"
 	"github.com/labstack/echo"
+	"regexp"
+	"strings"
 )
-//import "github.com/labstack/echo/middleware"
 
+var botRegExpHeader = make(map[string]*regexp.Regexp)
+
+func initRegExp() {
+	//var botRegExpString =
+	var st = `/ISUCONbot(-Mobile)?/
+/ISUCONbot-Image\//
+/Mediapartners-ISUCON/
+/ISUCONCoffee/
+/ISUCONFeedSeeker(Beta)?/
+/crawler \(https:\/\/isucon\.invalid\/(support\/faq\/|help\/jp\/)/
+/isubot/
+/Isupider/
+/Isupider(-image)?\+/
+/(bot|crawler|spider)(?:[-_ .\/;@()]|$)/i`
+	botRegExpStringArr := strings.Split(st, "\n")
+
+	//botRegExpStringArr := [...]string{
+	//
+	//} // こうかける
+	for _, botRSt := range botRegExpStringArr {
+		println("botRSt: ", botRSt)
+	}
+
+	//  *regexp.Regexp
+	//var validID = regexp.MustCompile(`^[a-z]+\[[0-9]+\]$`)
+
+}
 
 func HandleBot() echo.MiddlewareFunc {
 	return func(next echo.HandlerFunc) echo.HandlerFunc {
@@ -15,28 +43,6 @@ func HandleBot() echo.MiddlewareFunc {
 			userAgentValue := header.Get("User-Agent")
 			fmt.Printf("[HandleBot] user agent: %v \n", userAgentValue)
 			return next(c)
-			//if config.Skipper(c) {
-			//	return next(c)
-			//}
-
-			//defer func() {
-			//	if r := recover(); r != nil {
-			//		err, ok := r.(error)
-			//		if !ok {
-			//			err = fmt.Errorf("%v", r)
-			//		}
-			//		stack := make([]byte, 10)
-			//		//length := runtime.Stack(stack, !config.DisableStackAll)
-			//		length := 10
-			//		//if !config.DisablePrintStack {
-			//		if false {
-			//			c.Logger().Printf("[PANIC RECOVER] %v %s\n", err, stack[:length])
-			//		}
-			//		c.Error(err)
-			//	}
-			//}()
-			//return next(c)
 		}
 	}
-	//return HandleMainBot
 }
