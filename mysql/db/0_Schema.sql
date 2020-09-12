@@ -2,11 +2,61 @@ DROP DATABASE IF EXISTS isuumo;
 CREATE DATABASE isuumo;
 
 DROP TABLE IF EXISTS isuumo.estate;
-DROP TABLE IF EXISTS isuumo.chair;
-
 CREATE TABLE isuumo.estate
 (
     id          INTEGER             NOT NULL PRIMARY KEY,
+
+    saijoukaiboolean NOT NULL DEFAULT FALSE,
+    bouhanboolean NOT NULL DEFAULT FALSE,
+    walkinboolean NOT NULL DEFAULT FALSE,
+    oneroomboolean NOT NULL DEFAULT FALSE,
+    roofvalboolean NOT NULL DEFAULT FALSE,
+    airconboolean NOT NULL DEFAULT FALSE,
+    chuurinboolean NOT NULL DEFAULT FALSE,
+    propanboolean NOT NULL DEFAULT FALSE,
+    chuushajouboolean NOT NULL DEFAULT FALSE,
+    bouonnboolean NOT NULL DEFAULT FALSE,
+    oidakiboolean NOT NULL DEFAULT FALSE,
+    autolockboolean NOT NULL DEFAULT FALSE,
+    sokunyukyoboolean NOT NULL DEFAULT FALSE,
+    ihconroboolean NOT NULL DEFAULT FALSE,
+    sikichinaiboolean NOT NULL DEFAULT FALSE,
+    tranckroomboolean NOT NULL DEFAULT FALSE,
+    kadobeyaboolean NOT NULL DEFAULT FALSE,
+    customizableboolean NOT NULL DEFAULT FALSE,
+    diyokboolean NOT NULL DEFAULT FALSE,
+    roftboolean NOT NULL DEFAULT FALSE,
+    shoesboxboolean NOT NULL DEFAULT FALSE,
+    internetfreeboolean NOT NULL DEFAULT FALSE,
+    chikashituboolean NOT NULL DEFAULT FALSE,
+    shikichinaiGomiokibaboolean NOT NULL DEFAULT FALSE,
+    kanrininariboolean NOT NULL DEFAULT FALSE,
+    takuhaibokusuboolean NOT NULL DEFAULT FALSE,
+    roomshareboolean NOT NULL DEFAULT FALSE,
+    securitycompboolean NOT NULL DEFAULT FALSE,
+    mezonetboolean NOT NULL DEFAULT FALSE,
+    womenboolean NOT NULL DEFAULT FALSE,
+    baikuokibaboolean NOT NULL DEFAULT FALSE,
+    eleveterboolean NOT NULL DEFAULT FALSE,
+    petokkamoboolean NOT NULL DEFAULT FALSE,
+    senmenjoboolean NOT NULL DEFAULT FALSE,
+    toshigusboolean NOT NULL DEFAULT FALSE,
+    yokushituboolean NOT NULL DEFAULT FALSE,
+    internetokokboolean NOT NULL DEFAULT FALSE,
+    televisionnetworkboolean NOT NULL DEFAULT FALSE,
+    niwaboolean NOT NULL DEFAULT FALSE,
+    systemkitchenboolean NOT NULL DEFAULT FALSE,
+    koureishaboolean NOT NULL DEFAULT FALSE,
+    cabletvboolean NOT NULL DEFAULT FALSE,
+    yukashitaboolean NOT NULL DEFAULT FALSE,
+    bustoiletbetsuboolean NOT NULL DEFAULT FALSE,
+    chuusha2ijouboolean NOT NULL DEFAULT FALSE,
+    gakisoudanokboolean NOT NULL DEFAULT FALSE,
+    flooringboolean NOT NULL DEFAULT FALSE,
+    alldenkaboolean NOT NULL DEFAULT FALSE,
+    tvmonitorinterboolean NOT NULL DEFAULT FALSE,
+    designersboolean NOT NULL DEFAULT FALSE,
+
     name        VARCHAR(64)         NOT NULL,
     description VARCHAR(4096)       NOT NULL,
     thumbnail   VARCHAR(128)        NOT NULL,
@@ -18,15 +68,17 @@ CREATE TABLE isuumo.estate
     door_width  INTEGER             NOT NULL,
     features    VARCHAR(64)         NOT NULL,
     popularity  INTEGER             NOT NULL,
-    INDEX `lat_long_pop` (`latitude`, `longitude`) USING BTREE, 
-    INDEX `reverse_lat_long` (`longitude`, `latitude`) USING BTREE, 
-    INDEX `reverse_lat_long_rev` (`longitude` ASC, `latitude` DESC) USING BTREE, 
+    INDEX `lat_long_pop` (`latitude`, `longitude`) USING BTREE,
+    INDEX `reverse_lat_long` (`longitude`, `latitude`) USING BTREE,
+    INDEX `reverse_lat_long_rev` (`longitude` ASC, `latitude` DESC) USING BTREE,
     INDEX `door_height_key` (`door_height` ) USING BTREE,
     INDEX `door_width_key` (`door_width` ) USING BTREE,
     INDEX `rent_key` (`rent` ) USING BTREE,
     INDEX `pop` (`popularity` ) USING BTREE,
-    FULLTEXT `fulltext_in_features` (`features`) 
+    FULLTEXT `fulltext_in_features` (`features`)
 );
+
+DROP TABLE IF EXISTS isuumo.chair;
 
     -- INDEX `popularity_key` (`popularity` ) USING BTREE,
     -- INDEX `lang_long_ASC` (`latitude`  ASC , `longitude`ASC ) USING BTREE,
