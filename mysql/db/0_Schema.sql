@@ -22,7 +22,7 @@ CREATE TABLE isuumo.estate
     INDEX `door_height_key` (`door_height` ) USING BTREE,
     INDEX `door_width_key` (`door_width` ) USING BTREE,
     INDEX `rent_key` (`rent` ) USING BTREE,
-    FULLTEXT `fulltext_in_features` (`features`)
+    FULLTEXT `fulltext_in_features` (`features`) 
 );
 
     -- INDEX `popularity_key` (`popularity` ) USING BTREE,
