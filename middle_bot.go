@@ -1,8 +1,8 @@
 package main
 
 import (
-	"fmt"
 	"github.com/labstack/echo"
+	"github.com/labstack/gommon/log"
 	"regexp"
 	"strings"
 )
@@ -19,12 +19,17 @@ ISUCONFeedSeeker(Beta)?
 crawler \(https:\/\/isucon\.invalid\/(support\/faq\/|help\/jp\/)
 isubot
 Isupider
-Isupider(-image)?\+`
-	// (bot|crawler|spider)(?:[-_ .\/;@()]|$)/i
+Isupider(-image)?\+
+.*BOT.*
+.*spider.*
+.*Spider.*
+.*SPIDER.*
+.*Crawler.*
+.*crawler.*
+.*bot.*`
+	// (bot|crawler|spider)(?:[-_ .\/;@()]|$)/i // これできてない。
 	botRegExpStringArr := strings.Split(st, "\n")
-
 	maxSize := len(botRegExpStringArr)
-	//botRegExpHeader	= make([]*regexp.Regexp, maxSize + 1)
 	botRegExpHeader	= make([]*regexp.Regexp, maxSize)
 
 	for i, botRSt := range botRegExpStringArr {
@@ -32,7 +37,7 @@ Isupider(-image)?\+`
 		botRegExpHeader[i] = regexp.MustCompile(botRSt)
 		pp := botRegExpHeader[i]
 		b := pp.MatchString("ISUCONbot-Image/")
-		println("found  botRst : ", botRSt, ", is ISUCONbot-Image? : ", b)
+		log.Debugf("found  botRst : ", botRSt, ", is ISUCONbot-Image? : ", b)
 	}
 
 }
@@ -48,9 +53,11 @@ func HandleBot() echo.MiddlewareFunc {
 	return func(next echo.HandlerFunc) echo.HandlerFunc {
 		return func(c echo.Context) error {
 			header := c.Request().Header
-			fmt.Printf("[HandleBot] header: %v\n", header)
+
 			userAgentValue := header.Get("User-Agent")
-			fmt.Printf("[HandleBot] user agent: %v \n", userAgentValue)
+
+			log.Debugf("[HandleBot] header: %v\n", header)
+			log.Debugf("[HandleBot] user agent: %v \n", userAgentValue)
 
 			for _, compiled := range botRegExpHeader {
 				if compiled.MatchString(userAgentValue) {
