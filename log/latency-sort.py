@@ -15,6 +15,7 @@ with open(fname) as f:
     for line in f.readlines():
         counter += 1
         if counter < 10: continue
+        if "NAZOTTE" in line: continue
         idx = line.index(start)
         json_line = line[idx:]
         jso = json.loads(json_line)
