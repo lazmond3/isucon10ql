@@ -2,3 +2,4 @@ isuumo
 *.log
 *.sql
 
+!0_Schema.sql
