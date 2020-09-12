@@ -52,6 +52,7 @@ func main() {
 	// Middleware
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
+	e.Use(HandleBot())
 
 	// Initialize
 	e.POST("/initialize", initialize)
